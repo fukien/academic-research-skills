@@ -14,6 +14,8 @@ name: PR Closes-Issue Check
 # auto-close does not fire.
 #
 # Override: include [skip-closes-check] in PR body with justification.
+# Copilot app-authored PRs are exempt because they are synthesized from
+# interactive sessions and may not have a directly closable issue.
 
 on:
   pull_request:
@@ -35,8 +37,14 @@ jobs:
       - name: Validate PR body
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
           set -euo pipefail
+
+          if [ "${PR_AUTHOR:-}" = "Copilot" ]; then
+            echo "Copilot-authored PR detected — skipping closes-check."
+            exit 0
+          fi
 
           if [ -z "${PR_BODY:-}" ]; then
             echo "::error::PR body is empty. Add a 'Closes #N' reference (or [skip-closes-check] with justification)."
