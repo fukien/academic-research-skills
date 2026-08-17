@@ -135,7 +135,10 @@ jobs:
           PYTHONPATH: .
         run: python3 -m unittest scripts.test_check_collaboration_depth_rubric -v
 
-      - name: Check rubric weight consistency (quality_rubrics / framework / SKILL rule 14)
+      - name: Check criterion-bound reviewer scoring honesty
+        run: python3 scripts/check_reviewer_scoring_honesty.py
+
+      - name: Check retired rubric-weight entrypoint compatibility
         run: python3 scripts/check_rubric_weight_consistency.py
 
       - name: Check citation-verification intake wiring (#392)
@@ -197,14 +200,18 @@ jobs:
             echo "ERROR: could not extract ARS version from CHANGELOG.md (need '## [X.Y.Z]' heading)" >&2
             exit 1
           fi
+          # Contract families may co-locate JSON Schemas; validate only instances.
           for f in shared/contracts/reviewer/*.json; do
+            [[ "$f" == *.schema.json ]] && continue
             python3 scripts/check_sprint_contract.py "$f" --ars-version "v${ARS_VERSION}"
           done
           # v3.6.6: writer + evaluator template validation loops mirror reviewer loop above.
           for f in shared/contracts/writer/*.json; do
+            [[ "$f" == *.schema.json ]] && continue
             python3 scripts/check_sprint_contract.py "$f" --ars-version "v${ARS_VERSION}"
           done
           for f in shared/contracts/evaluator/*.json; do
+            [[ "$f" == *.schema.json ]] && continue
             python3 scripts/check_sprint_contract.py "$f" --ars-version "v${ARS_VERSION}"
           done
 
@@ -221,6 +228,14 @@ jobs:
         # resolved for .py). The registry indexes, it never re-authors —
         # semantics stay in each row's authority file.
         run: python3 scripts/check_degradation_registry.py
+
+      - name: Validate stage capability matrix (#745)
+        # Pins shared/contracts/capability/stage_capability_matrix.json:
+        # frozen task-family vocabulary, non-collapsible evidence statuses
+        # (an unrun eval can never carry numbers), in-repo eval_ref and
+        # verbatim claim anchors, stale-evidence notes, and byte-identity of
+        # the generated docs/STAGE_CAPABILITY_MATRIX.md view.
+        run: python3 scripts/check_stage_capability_matrix.py
 
       - name: Validate corpus consumer protocol (v3.6.5+)
         run: python3 scripts/check_corpus_consumer_protocol.py

@@ -257,6 +257,22 @@ id = "655-claim-standing-stance-runner"
 path = "scripts/test_claim_standing_stance_runner.py"
 
 [[pytest]]
+id = "655-claim-standing-query-plan-builder"
+path = "scripts/test_build_claim_standing_query_plan.py"
+
+[[pytest]]
+id = "655-claim-standing-freshness"
+path = "scripts/test_check_claim_standing_freshness.py"
+
+[[pytest]]
+id = "655-claim-standing-transmissions"
+path = "scripts/test_claim_standing_transmissions.py"
+
+[[pytest]]
+id = "655-claim-standing-pipeline-wiring"
+path = "scripts/test_claim_standing_pipeline_wiring.py"
+
+[[pytest]]
 id = "655-claim-standing-view-renderer"
 path = "scripts/test_render_claim_standing_view.py"
 
@@ -267,6 +283,34 @@ path = "scripts/test_title_fuzzy_false_positive.py"
 [[pytest]]
 id = "396-rubric-weight-consistency"
 path = "scripts/test_check_rubric_weight_consistency.py"
+
+[[pytest]]
+id = "reviewer-scoring-honesty"
+path = "scripts/test_check_reviewer_scoring_honesty.py"
+
+[[pytest]]
+id = "735-socratic-rq-non-generation"
+path = "scripts/test_socratic_rq_non_generation_contract.py"
+
+[[pytest]]
+id = "736-claim-strength-drift-disposition"
+path = "scripts/test_claim_strength_drift_disposition.py"
+
+[[pytest]]
+id = "737-claim-registry-coverage"
+path = "scripts/test_claim_registry_coverage.py"
+
+[[pytest]]
+id = "737-claim-verification-coverage-contract"
+path = "scripts/test_claim_verification_coverage_contract.py"
+
+[[pytest]]
+id = "738-human-read-attestation-resolver"
+path = "scripts/test_human_read_attestation_resolver.py"
+
+[[pytest]]
+id = "740-review-panel-provenance"
+path = "scripts/test_review_panel_provenance.py"
 
 [[pytest]]
 id = "392-citation-verification-intake"
@@ -571,3 +615,7 @@ path = "scripts/test_check_claim_standing_candidate_ledger_integration.py"
 [[pytest]]
 id = "512-pdf-read-preflight-and-content-sandbox"
 path = "scripts/test_pdf_read_preflight.py"
+
+[[pytest]]
+id = "745-stage-capability-matrix"
+path = "scripts/test_check_stage_capability_matrix.py"
