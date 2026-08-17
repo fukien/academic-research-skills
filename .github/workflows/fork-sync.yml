@@ -13,7 +13,23 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      - name: Check for existing sync pull request
+        id: existing-pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pulls = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              base: 'main',
+              head: 'Imbad0202:main',
+              per_page: 100
+            });
+            core.setOutput('exists', pulls.data.length > 0 ? 'true' : 'false');
+
       - name: Sync upstream changes
+        if: steps.existing-pr.outputs.exists != 'true'
         uses: tgymnich/fork-sync@v2.0.10
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
