@@ -301,12 +301,13 @@ exactly like the three tag-only workflows.
 | `platform-port-reminder.yml` | PR targeting main | new top-level directory → platform-ports policy reminder | Advisory (one `::warning::`, always exits 0; the merge decision stays with the maintainer) | none |
 | `freshness-check.yml` | weekly schedule + push (two-file path filter for branch pushes; **also every tag push**) + manual dispatch | PRISMA-trAIce snapshot staleness | Advisory for staleness (warns on stderr, exits 0); malformed protocol metadata is a hard failure | none |
 | `harness-retirement-monthly.yml` | monthly schedule + manual dispatch | opens the monthly prompt-debt audit issue | Administrative | none |
+| `fork-sync.yml` | daily schedule + manual dispatch | syncs the fork's `main` branch with the upstream repository via an auto-opened PR | Administrative | none |
 | `defer-label-gate.yml` | tag push `v*` | open `defer:<tag>` issues must be closed or relabelled | Post-push detection | `[skip-defer-check]` in the tagged commit message |
 | `release-cooldown.yml` | tag push `v*` | paces consecutive release tags | Post-push detection | `[skip-cooldown]` in the commit/tag message |
 | `tag-version-match.yml` | tag push `v*` | re-runs the full version-consistency lint at the tag | Post-push detection | none |
 
-Count, honestly stated: **14 workflows — 8 blocking on at least one event class, 2
-advisory, 1 administrative, 3 post-push detection.**
+Count, honestly stated: **15 workflows — 8 blocking on at least one event class, 2
+advisory, 2 administrative, 3 post-push detection.**
 
 Inventory sync, the count line, and the bypass tokens are pinned by
 `scripts/check_workflow_classification.py`; the class *semantics* — whether a row
