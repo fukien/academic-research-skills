@@ -23,3 +23,9 @@ def test_fork_sync_step_skips_when_existing_pr_present() -> None:
     steps = _steps()
     sync_step = next(step for step in steps if step.get("name") == "Sync upstream changes")
     assert sync_step["if"] == "steps.existing-pr.outputs.exists != 'true'"
+
+
+def test_fork_sync_disables_auto_merge() -> None:
+    steps = _steps()
+    sync_step = next(step for step in steps if step.get("name") == "Sync upstream changes")
+    assert sync_step["with"]["auto_merge"] is False

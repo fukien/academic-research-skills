@@ -37,3 +37,4 @@ jobs:
           head: main         # The branch in the original repo you are pulling from
           owner: Imbad0202
           repo: academic-research-skills
+          auto_merge: false
