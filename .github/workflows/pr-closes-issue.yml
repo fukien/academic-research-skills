@@ -21,6 +21,8 @@ on:
     branches: [main]
     paths-ignore:
       - ".github/workflows/**"
+      - "docs/ARCHITECTURE.md"
+      - "scripts/check_workflow_classification.py"
 
 concurrency:
   group: pr-closes-issue-${{ github.event.pull_request.number }}-${{ github.event_name }}
