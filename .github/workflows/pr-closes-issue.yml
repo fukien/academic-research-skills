@@ -19,6 +19,8 @@ on:
   pull_request:
     types: [opened, edited, synchronize, reopened, ready_for_review]
     branches: [main]
+    paths-ignore:
+      - ".github/workflows/**"
 
 concurrency:
   group: pr-closes-issue-${{ github.event.pull_request.number }}-${{ github.event_name }}
